@@ -1,4 +1,4 @@
-package org.korichat.common;
+package org.korichat.common.io.util;
 
 import java.io.*;
 
@@ -14,5 +14,15 @@ public class ByteArrayUtil {
         ByteArrayInputStream in = new ByteArrayInputStream(data);
         ObjectInputStream is = new ObjectInputStream(in);
         return (T) is.readObject();
+    }
+
+    public static byte[] streamInBytes(InputStream is) throws IOException {
+        ByteArrayOutputStream byteArrayCollector = new ByteArrayOutputStream();
+        int readIn;
+        while ((readIn = is.read()) != -1) {
+            byteArrayCollector.write(readIn);
+        }
+        byteArrayCollector.flush();
+        return byteArrayCollector.toByteArray();
     }
 }

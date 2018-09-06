@@ -1,4 +1,4 @@
-package org.korichat.common;
+package org.korichat.model.message;
 
 import lombok.Data;
 
