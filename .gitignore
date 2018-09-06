@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 target/
 .idea/
 *.iml
 
+=======
+*.iml
+.idea
+target/
+>>>>>>> 8f1372780e3a0dbba74d4387ac67d83b940bf843
