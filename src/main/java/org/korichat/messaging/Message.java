@@ -1,4 +1,4 @@
-package org.korichat.model.message;
+package org.korichat.messaging;
 
 import lombok.Data;
 
@@ -10,21 +10,21 @@ import java.util.UUID;
 @Data
 public class Message<T> implements Serializable {
     private final String identifier;
-    private Class payloadType;
+
     private T payload;
+    private String topic;
+    private Class payloadType;
+
     private Map<String, String> headers;
 
-    public Message(T payload) {
-        this(UUID.randomUUID().toString(), payload, new HashMap<String, String>());
+    public Message(T payload, String topic) {
+        this(UUID.randomUUID().toString(), payload, topic, new HashMap<String, String>());
     }
 
-    public Message(T payload, Map<String, String> headers) {
-        this(UUID.randomUUID().toString(), payload, headers);
-    }
-
-    public Message(String identifier, T payload, Map<String, String> headers) {
+    public Message(String identifier, T payload, String topic, Map<String, String> headers) {
         this.identifier = identifier;
         this.payload = payload;
+        this.topic = topic;
         this.headers = headers;
         this.payloadType = this.payload.getClass();
     }

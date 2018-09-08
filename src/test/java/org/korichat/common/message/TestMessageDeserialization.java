@@ -2,21 +2,22 @@ package org.korichat.common.message;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.korichat.common.io.util.ByteArrayUtil;
-import org.korichat.model.message.Message;
+import org.korichat.common.io.ByteArrayUtil;
+import org.korichat.messaging.Message;
+import org.korichat.messaging.util.MessageDeserializationUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.korichat.common.io.util.ByteArrayUtil.deserialize;
-import static org.korichat.common.io.util.ByteArrayUtil.serialize;
+import static org.korichat.common.io.ByteArrayUtil.deserialize;
+import static org.korichat.common.io.ByteArrayUtil.serialize;
 
 public class TestMessageDeserialization {
 
     @Test
     public void testDeserialize() throws IOException, ClassNotFoundException {
-        Message<String> message = new Message<>("Hello world");
+        Message<String> message = new Message<>("Hello world", null);
         byte[] objectBytes = serialize(message);
 
         Message objectMessage = ByteArrayUtil.deserialize(objectBytes);
@@ -33,15 +34,16 @@ public class TestMessageDeserialization {
     @Test
     public void testReadByteDataOverStream() throws IOException, ClassNotFoundException {
         // serialize object into byte[]
-        Message<String> message = new Message<>("Hello world");
+        Message<String> message = new Message<>("Hello world", null);
         byte[] serializedBytes = serialize(message);
 
         // read bytes from input stream as byte[]
         InputStream is = new ByteArrayInputStream(serializedBytes);
-        byte[] readInBytes = ByteArrayUtil.streamInBytes(is);
+        byte[] readInBytes = ByteArrayUtil.readBytesFromStream(is);
+
+        Assert.assertArrayEquals(serializedBytes, readInBytes);
 
         Message<String> deserializeMessage = deserialize(readInBytes);
-
         Assert.assertEquals(message, deserializeMessage);
     }
 }

@@ -1,4 +1,4 @@
-package org.korichat.model.message;
+package org.korichat.messaging;
 
 public class MessageException extends RuntimeException {
     public MessageException(String message) {
